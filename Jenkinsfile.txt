@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/alinaleem/hello-world-web-app.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    def app = docker.build("hello-world-web-app")
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    def app = docker.image("hello-world-web-app")
+                    app.inside {
+                        sh 'npm test'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    def app = docker.image("hello-world-web-app")
+                    app.run('-d -p 3000:3000')
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
