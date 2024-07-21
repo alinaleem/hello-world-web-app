@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     def app = docker.image("hello-world-web-app")
-                    app.run('-d -p 3000:3000')
+                    app.run('-d -p 3000:3000 --name hello-world-webapp')
                 }
             }
         }
@@ -43,3 +43,6 @@ pipeline {
         }
     }
 }
+
+
+
