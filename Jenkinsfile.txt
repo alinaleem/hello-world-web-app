@@ -11,7 +11,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    def app = docker.build("hello-world-web-app")
+                    // Build the Docker image using Docker Compose
+                    sh 'docker-compose build'
                 }
             }
         }
@@ -19,19 +20,26 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    def app = docker.image("hello-world-web-app")
-                    app.inside {
-                        sh 'npm test'
-                    }
+                    // Run the Docker Compose services
+                    sh 'docker-compose up -d'
+                    
+                    // Wait for the services to start
+                    sleep 10
+                    
+                    // Run tests
+                    sh 'curl http://localhost:3000'
+
+                    // Stop the Docker Compose services
+                    sh 'docker-compose down'
                 }
             }
         }
 
-        stage('Deploy') {
+         stage('Deploy') {
             steps {
                 script {
-                    def app = docker.image("hello-world-web-app")
-                    app.run('-d -p 3000:3000 --name hello-world-webapp')
+                    // Deploy the Docker Compose services
+                    sh 'docker-compose up -d'
                 }
             }
         }
