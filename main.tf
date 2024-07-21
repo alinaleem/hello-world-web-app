@@ -55,6 +55,7 @@ resource "aws_instance" "ubuntu_instance" {
       "sudo apt install docker.io",
       "sudo systemctl start docker",
       "sudo systemctl enable docker",
+      "sudo systemctl status docker",
 
     ]
 
