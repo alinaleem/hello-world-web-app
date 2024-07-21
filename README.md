@@ -1,5 +1,5 @@
 
-# DevOps Assignment README
+# Simple 'Hello, World!' Node.js Web-App
 
 This repository contains a simple Node.js "Hello, World!" web application along with a Jenkins pipeline configured for CI/CD. The application is containerized using Docker, and Jenkins automates the build, test, and deployment processes. This setup is hosted on an AWS EC2 instance. A Terraform config is included to deploy infrastructure.
 
